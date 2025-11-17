@@ -2,205 +2,250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>classes + resources</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>resources 4 class</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    body {
-        margin: 0;
-        padding: 30px;
-        background: #cffaf4;
-        font-family:"Georgia", serif;
-        color: #2a6369;
-        display: flex;
-        justify-content: center;
-    }
+:root {
+    --bg: #ebf8fc; 
+    --card-bg: #f0fbfc; 
+    --text: #2a6369; 
+    --accent: #0a363b; 
+    --hover-shadow: rgba(42,99,105,0.2);
+}
 
-    .container {
-        width: 480px;
-    }
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Times New Roman', serif; }
 
-    h1 {
-        font-size: 26px;
-        font-weight: 600;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+body {
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+}
 
-    .section {
-        margin-bottom: 32px;
-    }
+.container {
+    width: 100%;
+    max-width: 900px;
+}
 
-    input, button {
-        width: 100%;
-        padding: 10px 14px;
-        border-radius: 8px;
-        border: 1px solid #add9de;
-        background: #f0fbfc;
-        font-size: 14px;
-        margin-top: 8px;
-        font-family:"Georgia", serif;
-    }
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--accent);
+}
 
-    button {
-        background: #0a363b;
-        color: #daf0f2;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+/* Grid layout */
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 24px;
+}
 
-    button:hover {
-        opacity: 0.85;
-    }
 
-    .subject {
-        background: #f0fbfc;
-        border: 1px solid #add9de;
-        padding: 14px;
-        border-radius: 12px;
-        margin-bottom: 12px;
-    }
+.subject-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 16px var(--hover-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    .subject-header {
-        display: flex;
-        justify-content: space-between;
-        cursor: pointer;
-        font-weight: 500;
-        font-size: 16px;
-    }
+.subject-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px var(--hover-shadow);
+}
 
-    .resource-list {
-        margin-top: 10px;
-        display: none;
-    }
+.subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
 
-    .resource {
-        background: #fff;
-        padding: 10px 12px;
-        border-radius: 8px;
-        border: 1.5px solid #add9de;
-        margin-top: 8px;
-        font-size: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.subject-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
 
-    .resource a {
-        color: #0a363b;
-        text-decoration: none;
-    }
+.subject-header .delete-btn {
+    font-size: 18px;
+    color: #ff4b5c;
+    cursor: pointer;
+    transition: color 0.2s;
+}
 
-    .delete-btn {
-        cursor: pointer;
-        background: none;
-        border: none;
-        font-size: 25px;
-        color: #0a363b;
-    }
+.subject-header .delete-btn:hover { color: #ff1e2d; }
+
+.resource-list {
+    margin-top: 16px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+}
+
+.resource-list.active {
+    opacity: 1;
+    max-height: 1000px;
+}
+
+.resource-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #e0f7f6;
+    margin-bottom: 12px;
+    transition: transform 0.2s;
+}
+
+.resource-item a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.resource-item a:hover { text-decoration: underline; }
+
+.resource-item .delete-btn {
+    font-size: 16px;
+    color: #ff4b5c;
+    cursor: pointer;
+}
+
+.resource-item .delete-btn:hover { color: #ff1e2d; }
+
+.add-btn {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 12px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.add-btn:hover {
+    background: #0c4f54;
+    transform: translateY(-2px);
+}
+
+.floating-add {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--hover-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.floating-add:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--hover-shadow);
+}
+
+@media(max-width:500px){
+    h1 { font-size: 28px; }
+}
 </style>
 </head>
 <body>
 
 <div class="container">
-
-    <h1>resources for classes</h1>
-
-
-    <div class="section">
-        <h3>add subject</h3>
-        <input id="newSubject" placeholder="type a subject name here">
-        <button onclick="addSubject()">add subject</button>
-    </div>
-
-
-    <div id="subjectsContainer"></div>
-
+    <h1>resources for class</h1>
+    <div class="subject-grid" id="subjectsContainer"></div>
 </div>
 
+<button class="floating-add" onclick="promptAddSubject()"><i class="fa-solid fa-plus"></i></button>
+
 <script>
-    let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 
-    function save() {
-        localStorage.setItem("subjects", JSON.stringify(subjects));
-    }
+// Save
+function save(){ localStorage.setItem("subjects", JSON.stringify(subjects)); }
 
-    
-    function addSubject() {
-        const name = document.getElementById("newSubject").value.trim();
-        if (name === "" || subjects.find(s => s.name === name)) return;
-
-        subjects.push({ name, resources: [] });
-        document.getElementById("newSubject").value = "";
-        save();
-        render();
-    }
-
-    
-    function addResource(index) {
-        const title = prompt("resource name (ex. unit 1 notes)");
-        if (!title) return;
-
-        const link = prompt("paste link for pdf, doc, etc");
-        if (!link) return;
-
-        subjects[index].resources.push({ title, link });
-        save();
-        render();
-    }
-
-   
-    function deleteResource(subIndex, resIndex) {
-        subjects[subIndex].resources.splice(resIndex, 1);
-        save();
-        render();
-    }
-
-   
-    function deleteSubject(index) {
-        if (!confirm("delete subject?")) return;
-        subjects.splice(index, 1);
-        save();
-        render();
-    }
-
-
-    function toggleResources(i) {
-        const box = document.getElementById("resources-" + i);
-        box.style.display = box.style.display === "none" ? "block" : "none";
-    }
-
-  
-    function render() {
-        const container = document.getElementById("subjectsContainer");
-        container.innerHTML = "";
-
-        subjects.forEach((sub, i) => {
-            const div = document.createElement("div");
-            div.className = "subject";
-
-            div.innerHTML = `
-                <div class="subject-header" onclick="toggleResources(${i})">
-                    <span>${sub.name}</span>
-                    <span style="cursor:pointer;" onclick="deleteSubject(${i}); event.stopPropagation();">&times;</span>
-                </div>
-
-                <div class="resource-list" id="resources-${i}" style="display:none;">
-                    ${sub.resources.map((r, j) => `
-                        <div class="resource">
-                            <a href="${r.link}" target="_blank">${r.title}</a>
-                            <button class="delete-btn" onclick="deleteResource(${i}, ${j})">&times;</button>
-                        </div>
-                    `).join("")}
-
-                    <button class="small" onclick="addResource(${i})" style="margin-top:12px;">add resource</button>
-                </div>
-            `;
-
-            container.appendChild(div);
-        });
-    }
-
+function promptAddSubject(){
+    const name = prompt("enter name of subject:");
+    if(!name || subjects.find(s=>s.name===name)) return;
+    subjects.push({name, resources: []});
+    save();
     render();
+}
+
+
+function addResource(index){
+    const title = prompt("enter name for resource:");
+    if(!title) return;
+    const link = prompt("paste link of resource (docs, pdf, etc):");
+    if(!link) return;
+    subjects[index].resources.push({title, link});
+    save();
+    render();
+}
+
+
+function deleteResource(subIndex,resIndex){
+    subjects[subIndex].resources.splice(resIndex,1);
+    save();
+    render();
+}
+
+function deleteSubject(index){
+    if(!confirm("confirm delete?")) return;
+    subjects.splice(index,1);
+    save();
+    render();
+}
+
+
+function toggleResources(i){
+    const list = document.getElementById('resources-'+i);
+    list.classList.toggle('active');
+}
+
+
+function render(){
+    const container = document.getElementById('subjectsContainer');
+    container.innerHTML = '';
+
+    subjects.forEach((sub,i)=>{
+        const card = document.createElement('div');
+        card.className = 'subject-card';
+
+        card.innerHTML = `
+            <div class="subject-header" onclick="toggleResources(${i})">
+                <h2>${sub.name} (${sub.resources.length})</h2>
+                <span class="delete-btn" onclick="deleteSubject(${i}); event.stopPropagation();">&times;</span>
+            </div>
+            <div class="resource-list" id="resources-${i}">
+                ${sub.resources.map((r,j)=>`
+                    <div class="resource-item">
+                        <a href="${r.link}" target="_blank">${r.title}</a>
+                        <span class="delete-btn" onclick="deleteResource(${i},${j})">&times;</span>
+                    </div>
+                `).join('')}
+                <button class="add-btn" onclick="addResource(${i})">Add Resource</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+render();
 </script>
 
 </body>
